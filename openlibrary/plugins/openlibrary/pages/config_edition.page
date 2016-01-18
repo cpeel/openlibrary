@@ -203,7 +203,7 @@
             "label": "Paperback Swap"
         }, 
         {
-            "url": "http://www.gutenberg.org/etext/@@@", 
+            "url": "http://www.gutenberg.org/ebook/@@@",
             "website": "www.gutenberg.org", 
             "name": "project_gutenberg", 
             "label": "Project Gutenberg"
