@@ -23,6 +23,7 @@
       - build-essential
       - git-core
       - memcached
+      - libdb5.1-dev
       - libgeoip-dev
       - python-dev
       - python-pip

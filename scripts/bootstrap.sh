@@ -24,6 +24,7 @@ curl
 screen
 
 libgeoip-dev
+libdb5.1-dev
 
 python-dev
 python-lxml
@@ -45,6 +46,9 @@ python-pytest"
 
 apt-get install -y $APT_PACKAGES
 
+# gutenberg module requires the BerkeleyDB which needs to know where it's installed
+export BERKELEYDB_DIR=/usr
+
 PYTHON_PACKAGES="
 DBUtils==1.1
 iptools==0.4.0
@@ -54,6 +58,7 @@ pystatsd==0.1.6
 eventer==0.1.1
 OL-GeoIP==1.2.4
 mockcache
+git+git://github.com/cpeel/Gutenberg.git@cache_manager
 sixpack-client"
 
 REINDEX_SOLR=no

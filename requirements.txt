@@ -23,6 +23,7 @@ eventer==0.1.1
 SQLAlchemy==0.7.4
 Pygments==1.4
 OL-GeoIP==1.2.4
+gutenberg==0.4.2
 ## The following requirements were added by pip --freeze:
 Jinja2==2.6
 amqplib==1.0.2

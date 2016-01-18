@@ -33,6 +33,7 @@ sqlalchemy
 Pygments
 OL-GeoIP
 mockcache
+gutenberg==0.4.2
 """
 
 setup(

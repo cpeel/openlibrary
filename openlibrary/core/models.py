@@ -350,6 +350,17 @@ class Edition(Thing):
             if filename:
                 return "https://archive.org/download/%s/%s" % (self.ocaid, filename)
 
+    def get_pg_download_link(self, format):
+        """Returns available Project Gutenberg link for the given format."""
+        try:
+            pg_ebook_number = max(self.identifiers.project_gutenberg)
+        except:
+            return None
+
+        from ..plugins.gutenberg import pgebook
+        book = pgebook.PgEbook(pg_ebook_number)
+        return book.get_link_to_book_text(format)
+
     def is_ia_scan(self):
         metadata = self.get_ia_meta_fields()
         # all IA scans will have scanningcenter field set
