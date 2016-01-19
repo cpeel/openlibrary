@@ -42,8 +42,17 @@ $if meta_fields:
         $ library = get_library()
 
 $ overdrive_id = None
-$if book.get('identifiers', None) and book.identifiers.get('overdrive', None):
-    $ overdrive_id = book.identifiers.overdrive[0]
+$ pg_text = None
+$ pg_html = None
+$if book.get('identifiers'):
+    $if book.identifiers.get('overdrive', None):
+        $ overdrive_id = book.identifiers.overdrive[0]
+    $if book.identifiers.get('project_gutenberg'):
+        $ pg_text = book.get_pg_download_link("text")
+        $ pg_html = book.get_pg_download_link("html")
+        $ pg_epub = book.get_pg_download_link("epub")
+        $ pg_mobi = book.get_pg_download_link("kindle")
+
 
 $ scribd = book.get('identifiers', {}).get('scribd', [None])[0]
 
@@ -89,10 +98,12 @@ $ url = book.get_cover_url("S") or "/images/icons/avatar_book-sm.png"
             </ul>
         </div>
         </td> 
-    $elif book.ocaid:
+    $elif book.ocaid or pg_text or pg_html:
         <td class="icon read">
         <div class="aaaa"></div>
         <div class="links">
+        $if book.ocaid:
+            <b>Internet Archive</b>
             <ul>
             <li><strong><a href="$viewbook.replace('XXX', book.ocaid)" title="Read a scanned version in BookReader">Read online</a></strong><br/><br/></li>
             <li><a href="$downloadbook.replace('XXX', book.ocaid)" title="Download a PDF">PDF</a></li>
@@ -102,6 +113,20 @@ $ url = book.get_cover_url("S") or "/images/icons/avatar_book-sm.png"
             <li><a href="$djvu.replace('XXX', book.ocaid)" title="Download a DjVu">DjVu</a></li>
             <li><a href="$mobi.replace('XXX', book.ocaid)" title="Download a MOBI file from Internet Archive">MOBI</a></li>
             <li><a href="$kindle.replace('XXX', book.ocaid)" title="Send to Kindle">Send to Kindle</a></li>
+            </ul>
+            $if pg_text or pg_html:
+                <br>
+        $if pg_text or pg_html:
+            <b>Project Gutenberg</b>
+            <ul>
+            $if pg_html:
+                <li><strong><a href="$pg_html" title="Use web browser to read online">Read online</a></strong><br/><br/></li>
+            $if pg_text:
+                <li><a href="$pg_text" title="Download a text version from Project Gutenberg">Plain text</a></li>
+            $if pg_epub:
+                <li><a href="$pg_epub" title="Download an ePub from Project Gutenberg">ePub</a></li>
+            $if pg_mobi:
+                <li><a href="$pg_mobi" title="Download a MOBI file from Project Gutenberg">MOBI</a></li>
             </ul>
         </div>
         </td>
