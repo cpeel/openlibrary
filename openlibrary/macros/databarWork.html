@@ -50,7 +50,6 @@ $elif isbn_13:
 $ overdrive_id = None
 $ asin = None
 $ scribd = None
-$ pg_ebook_num = None
 $ pg_text = None
 $ pg_html = None
 $if page.get('identifiers'):
@@ -61,7 +60,6 @@ $if page.get('identifiers'):
     $if page.identifiers.get('amazon'):
         $ asin = page.identifiers.amazon[0]
     $if page.identifiers.get('project_gutenberg'):
-        $ pg_ebook_num = max(page.identifiers.project_gutenberg)
         $ pg_text = page.get_pg_download_link("text")
         $ pg_html = page.get_pg_download_link("html")
         $ pg_epub = page.get_pg_download_link("epub")
@@ -125,7 +123,7 @@ $elif page.get('ocaid') or pg_text or pg_html:
         </h3>
         <div class="panel" id="readBooks">
         $if page.get('ocaid'):
-            <p><b>From Internet Archive</b></p>
+            <p><b>Internet Archive</b></p>
             <p><a href="$viewbook.replace('XXX', page.ocaid)" title="Use BookReader to read online"><strong>Read online</strong></a><br/><br/></p>
             $if downloadbook:
                 <p><a href="$downloadbook" title="Download a PDF from Internet Archive">PDF</a></p>
@@ -139,8 +137,10 @@ $elif page.get('ocaid') or pg_text or pg_html:
                 <p><a href="$djvu" title="Download a DjVu from Internet Archive">DjVu</a></p>
             $if mobi:
                 <p><a href="$mobi" title="Download a MOBI file from Internet Archive">MOBI</a> or <a href="$kindle.replace('XXX', page.ocaid)" title="Send to Kindle">send to Kindle</a></p>
+            $if pg_text or pg_html:
+                <br>
         $if pg_text or pg_html:
-            <p><b>From Project Gutenberg</b></p>
+            <p><b>Project Gutenberg</b></p>
             $if pg_html:
                 <p><a href="$pg_html" title="Use web browser to read online"><strong>Read online</strong></a><br/><br/></p>
             $if pg_text:
